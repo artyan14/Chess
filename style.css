@@ -1,0 +1,374 @@
+
+/* ---------- ОСНОВА ---------- */
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+    color-scheme: dark;
+    --background: #17191f;
+    --panel: #22262e;
+    --border: #3b414c;
+    --green: #769656;
+    --green-light: #b8e986;
+    --text: #f1f1f1;
+    --muted: #a6a9b3;
+}
+
+html {
+    min-height: 100%;
+    background: var(--background);
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: var(--background);
+    color: var(--text);
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+button {
+    font: inherit;
+    touch-action: manipulation;
+}
+
+button:focus-visible {
+    outline: 3px solid #facc15;
+    outline-offset: 3px;
+}
+
+/* ---------- ЭКРАНЫ ---------- */
+.screen {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 24px 20px;
+    text-align: center;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ---------- ГЛАВНОЕ МЕНЮ ---------- */
+.logo {
+    margin-top: clamp(45px, 15vh, 120px);
+    margin-bottom: 10px;
+    font-size: clamp(44px, 12vw, 64px);
+    letter-spacing: 1px;
+}
+
+.logo span {
+    color: var(--green-light);
+}
+
+.subtitle {
+    margin-bottom: 36px;
+    color: var(--muted);
+    font-size: 15px;
+}
+
+.main-button {
+    width: 100%;
+    max-width: 320px;
+    min-height: 54px;
+    padding: 15px 24px;
+    border: none;
+    border-radius: 12px;
+    background: var(--green);
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.main-button:active,
+.mode-card:active,
+.controls button:active {
+    transform: scale(0.98);
+}
+
+/* ---------- ВЫБОР РЕЖИМА ---------- */
+#mode-menu h2 {
+    margin-top: 10px;
+    font-size: 25px;
+}
+
+.back-button {
+    display: block;
+    min-height: 44px;
+    margin-bottom: 22px;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    background: var(--panel);
+    color: white;
+    cursor: pointer;
+}
+
+.mode-options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 28px;
+}
+
+.mode-card {
+    min-width: 0;
+    min-height: 170px;
+    padding: 20px 12px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--panel);
+    color: white;
+    cursor: pointer;
+}
+
+.mode-icon,
+.mode-title,
+.mode-description {
+    display: block;
+}
+
+.mode-icon {
+    margin-bottom: 12px;
+    font-size: 40px;
+}
+
+.mode-title {
+    margin-bottom: 8px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.mode-description {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+/* ---------- ИГРА ---------- */
+#game-screen {
+    width: 100%;
+    max-width: 560px;
+    padding: 16px 12px 24px;
+}
+
+#game-screen h2 {
+    margin: 8px 0 10px;
+    font-size: clamp(20px, 5vw, 26px);
+}
+
+#status {
+    min-height: 22px;
+    margin: 0 0 12px;
+    color: var(--green-light);
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+/* ---------- ШАХМАТНАЯ ДОСКА ---------- */
+.board {
+    width: 100%;
+    max-width: 536px;
+    aspect-ratio: 1 / 1;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    grid-template-rows: repeat(8, minmax(0, 1fr));
+    border: 3px solid #30343d;
+    overflow: hidden;
+    touch-action: manipulation;
+}
+
+.square {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    min-height: 0;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    font-size: clamp(24px, 7vw, 48px);
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.light {
+    background: #eeeed2;
+    color: #fffdf4;
+}
+
+.dark {
+    background: #769656;
+    color: #171717;
+}
+
+.square.light,
+.square.dark {
+    opacity: 1;
+    -webkit-text-fill-color: currentColor;
+}
+
+.square.selected {
+    background: #f6f669;
+}
+
+/* Возможный ход */
+.square.possible-move::after {
+    content: "";
+    position: absolute;
+    width: 25%;
+    height: 25%;
+    border-radius: 50%;
+    background: rgba(30, 70, 30, 0.55);
+    pointer-events: none;
+}
+
+/* Возможное взятие */
+.square.possible-capture {
+    box-shadow: inset 0 0 0 4px rgba(180, 40, 40, 0.75);
+}
+
+/* Король под шахом */
+.square.in-check {
+    background: #e74c3c !important;
+    box-shadow: inset 0 0 0 4px #ff7770;
+}
+
+/* Фигуры */
+.chess-piece {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+/* ---------- УПРАВЛЕНИЕ ---------- */
+.controls {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.controls button {
+    min-width: 0;
+    min-height: 46px;
+    padding: 11px 8px;
+    border: none;
+    border-radius: 9px;
+    background: var(--green);
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#message {
+    min-height: 20px;
+    margin: 12px 0 0;
+    color: var(--muted);
+    text-align: center;
+    font-size: 13px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+/* ---------- НАВЕДЕНИЕ МЫШЬЮ ---------- */
+@media (hover: hover) and (pointer: fine) {
+    .main-button:hover,
+    .controls button:hover {
+        background: #8aaa65;
+    }
+
+    .mode-card:hover {
+        filter: brightness(1.12);
+    }
+}
+
+/* ---------- ТЕЛЕФОНЫ ---------- */
+@media (max-width: 420px) {
+    .screen {
+        padding-right: 16px;
+        padding-left: 16px;
+    }
+
+    .mode-options {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-top: 22px;
+    }
+
+    .mode-card {
+        display: grid;
+        grid-template-columns: 48px minmax(0, 1fr);
+        grid-template-rows: auto auto;
+        column-gap: 10px;
+        align-items: center;
+        min-height: 88px;
+        padding: 14px;
+        text-align: left;
+    }
+
+    .mode-icon {
+        grid-column: 1;
+        grid-row: 1 / 3;
+        margin: 0;
+        font-size: 34px;
+    }
+
+    .mode-title {
+        grid-column: 2;
+        grid-row: 1;
+        margin: 0 0 4px;
+        font-size: 16px;
+    }
+
+    .mode-description {
+        grid-column: 2;
+        grid-row: 2;
+    }
+
+    #game-screen {
+        padding: 12px 8px 20px;
+    }
+
+    #game-screen > .back-button {
+        margin-bottom: 16px;
+    }
+
+    .board {
+        border-width: 2px;
+    }
+
+    .square.possible-capture {
+        box-shadow: inset 0 0 0 3px rgba(180, 40, 40, 0.75);
+    }
+}
+
+/* Очень узкие экраны */
+@media (max-width: 340px) {
+    .screen {
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+
+    .controls {
+        gap: 7px;
+    }
+
+    .controls button {
+        font-size: 12px;
+    }
+}

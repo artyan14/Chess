@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MyChess</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Главное меню -->
+    <section id="main-menu" class="screen">
+        <h1 class="logo">MyChess<span>.</span></h1>
+
+        <p class="subtitle">Твои шахматы. Твои правила.</p>
+
+        <button id="start-button" class="main-button">
+            Начать партию
+        </button>
+    </section>
+
+    <!-- Выбор режима -->
+    <section id="mode-menu" class="screen hidden">
+        <button id="back-button" class="back-button">
+            ← Назад
+        </button>
+
+        <h2>Выбери режим</h2>
+
+        <div class="mode-options">
+            <button id="bot-mode" class="mode-card">
+                <span class="mode-icon">🤖</span>
+                <span class="mode-title">Играть с ботом</span>
+                <span class="mode-description">
+                    Сразись с компьютером
+                </span>
+            </button>
+
+            <button id="friend-mode" class="mode-card">
+                <span class="mode-icon">♟️</span>
+                <span class="mode-title">Играть с другом</span>
+                <span class="mode-description">
+                    Два игрока на одном устройстве
+                </span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Экран игры -->
+    <section id="game-screen" class="screen hidden">
+        <button id="menu-button" class="back-button">
+            ← В меню
+        </button>
+
+        <h2 id="game-title">Шахматная партия</h2>
+
+        <p id="status">Загрузка игры...</p>
+
+        <div id="board" class="board"></div>
+
+        <div class="controls">
+            <button id="restart-button">Новая партия</button>
+            <button id="undo-button">Отменить ход</button>
+        </div>
+
+        <p id="message"></p>
+    </section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+
+<script src="script.js"></script>
+
+
+</body>
+</html>

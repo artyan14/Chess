@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Тест Stockfish</title>
+</head>
+<body>
+    <h2>Проверка шахматного движка</h2>
+    <pre id="output">Запускаем Stockfish...</pre>
+
+```
+<script>
+    const output = document.getElementById("output");
+
+    try {
+        const engine = new Worker("stockfish.wasm.js");
+
+        engine.onmessage = function (event) {
+            output.textContent += "\n" + event.data;
+        };
+
+        engine.onerror = function (event) {
+            output.textContent += "\nОшибка запуска: " + event.message;
+        };
+
+        engine.postMessage("uci");
+        engine.postMessage("isready");
+        engine.postMessage("position startpos");
+        engine.postMessage("go depth 5");
+    } catch (error) {
+        output.textContent += "\nОшибка: " + error.message;
+    }
+</script>
+```
+
+</body>
+</html>
